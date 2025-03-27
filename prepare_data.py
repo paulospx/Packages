@@ -53,24 +53,48 @@ def select_n_rows(df, n):
         pd.DataFrame: A DataFrame with only the first n rows.
     """
     return df.head(n) if df is not None else None 
-  
+
+# a method to merger from 2 dataframes on the first column
+def merge_dataframes_on_first_column(df1, df2):
+    """
+    Merges two DataFrames on the first column.
+
+    Parameters:
+        df1 (pd.DataFrame): The first DataFrame.
+        df2 (pd.DataFrame): The second DataFrame.
+
+    Returns:
+        pd.DataFrame: A merged DataFrame.
+    """
+    if df1 is not None and df2 is not None:
+        return pd.merge(df1, df2, left_on=df1.columns[0], right_on=df2.columns[0])
+    else:
+        print("One of the DataFrames is None.")
+        return None
+
 
 # read excel file1.xlsx and file2.xlsx into dataframes and filter columns containing 'A' and join the dataframes
 def main():
-    file1_path = 'file1.xlsx'
-    file2_path = 'file2.xlsx'
+    file1_path = 'C:\\Repos\\Data\\Curves\\Book_1.xlsx'
+    file2_path = 'C:\\Repos\\Data\\Curves\\Book_2.xlsx'
 
     # Read the Excel files into DataFrames
     df1 = read_excel_to_dataframe(file1_path)
     df2 = read_excel_to_dataframe(file2_path)
 
     # Filter columns containing 'A'
-    filtered_df1 = filter_columns_containing_string_and_maturity(df1, 'A')
-    filtered_df2 = filter_columns_containing_string_and_maturity(df2, 'A')
+    filtered_df1 = filter_columns_containing_string_and_maturity(df1, 'swap')
+    filtered_df2 = filter_columns_containing_string_and_maturity(df2, 'swap')
 
     # Join the DataFrames on the common columns
     if filtered_df1 is not None and filtered_df2 is not None:
-        merged_df = pd.merge(filtered_df1, filtered_df2, on='maturity', how='inner')
-        print(merged_df)
+        merged_df = merge_dataframes_on_first_column(filtered_df1, filtered_df2)
+        if merged_df is not None:
+            print(merged_df.head(50))
+        else:
+            print("The merged DataFrame is None.")
     else:
         print("One of the DataFrames is None.")
+
+
+main()
