@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Schedule Command";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Schedule a Command</h1>
+
+<form action="/Scheduler/Schedule" method="post" class="form-horizontal" autocomplete="off">
+    <fieldset>
+        <legend>Command Details</legend>
+        <div class="form-group">
+            <label for="Command" class="control-label">Command</label>
+            <input type="text" id="Command" name="Command" class="form-control" placeholder="Enter command" required aria-required="true" />
+        </div>
+        <div class="form-group">
+            <label for="Arguments" class="control-label">Arguments</label>
+            <input type="text" id="Arguments" name="Arguments" class="form-control" placeholder="Enter arguments (optional)" />
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Schedule Details</legend>
+        <div class="form-group">
+            <label for="StartTime" class="control-label">Start Time</label>
+            <input type="datetime-local" id="StartTime" name="StartTime" class="form-control" required aria-required="true" />
+        </div>
+        <div class="form-group">
+            <label for="Recurrence" class="control-label">Recurrence</label>
+            <select id="Recurrence" name="Recurrence" class="form-control" aria-describedby="recurrenceHelp">
+                <option value="None">Once</option>
+                <option value="Daily">Daily</option>
+                <option value="Weekly">Weekly</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Quarterly">Quarterly</option>
+            </select>
+            <small id="recurrenceHelp" class="form-text text-muted">
+                Select how often the command should run.
+            </small>
+        </div>
+        <div class="form-group" id="periodGroup" style="display:none;">
+            <label for="Period" class="control-label">Period (in days/weeks/months/quarters)</label>
+            <input type="number" id="Period" name="Period" class="form-control" min="1" value="1" />
+        </div>
+    </fieldset>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Schedule</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById('Recurrence').addEventListener('change', function () {
+            var periodGroup = document.getElementById('periodGroup');
+            if (this.value !== 'None') {
+                periodGroup.style.display = 'block';
+            } else {
+                periodGroup.style.display = 'none';
+            }
+        });
+    </script>
+}
