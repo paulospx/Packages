@@ -65,9 +65,34 @@ function Get-TimestampQuarter {
 }
 
 
+# Method to upload a file to an API endpoint adding parameters in the header
+# Example usage: Upload-File -FilePath "C:\path\to\file.json" -ApiEndpoint "https://api.example.com/upload"
+# Note: Ensure the API endpoint accepts the file format you are uploading.  
+function Send-File {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$FilePath,
 
+        [Parameter(Mandatory = $true)]
+        [string]$ApiEndpoint
+    )
 
+    try {
+        $fileContent = Get-Content -Path $FilePath -Raw
+        $response = Invoke-RestMethod -Uri $ApiEndpoint -Method Post -Body $fileContent -ContentType "application/json"
 
+        Write-Host "File uploaded successfully. Response: $response"
+    } catch {
+        Write-Error "Failed to upload file: $_"
+    }
+}
+
+# Example of Send-File function usage
+# Send-File -FilePath "C:\path\to\file.json" -ApiEndpoint "https://api.example.com/upload"
+
+# Example usage of the functions
+# Uncomment the lines below to test the functions
 
 # $tsm = Get-TimestampMonth
 # Write-Host "Current month timestamp: $tsm"
