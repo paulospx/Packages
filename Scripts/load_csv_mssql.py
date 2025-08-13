@@ -25,6 +25,7 @@ def load_csv_to_mssql(csv_file, connection_string, table_name):
     # Create a connection to the SQL Server database
     conn = pyodbc.connect(connection_string)
 
+
     # Load the DataFrame into the SQL Server table
     df.to_sql(table_name, conn, if_exists='replace', index=False)
 
