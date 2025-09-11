@@ -56,3 +56,14 @@ bin\Release\netX.X\win-x64\publish\
 
 Do you want me to make you a **ready-to-compile C# PIM role activation tool** and package it as a single `.exe`?
 That way you could just run it without needing to install .NET on the target machine.
+
+
+
+
+{HTTP method} https://graph.microsoft.com/{version}/{resource}?{query-parameters}
+
+/servicePrincipals/{id}
+
+ roledefinitionid
+
+ /servicePrincipals/{id}/appRoleAssignments
