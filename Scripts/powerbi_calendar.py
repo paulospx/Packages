@@ -15,7 +15,6 @@ calendar_df["Year"] = calendar_df["Date"].dt.year
 calendar_df["Month"] = calendar_df["Date"].dt.month
 calendar_df["MonthName"] = calendar_df["Date"].dt.strftime("%B")
 calendar_df["Quarter"] = calendar_df["Date"].dt.quarter
-calendar_df["Day"] = calendar_df["Date"].dt.day
 calendar_df["DayOfWeek"] = calendar_df["Date"].dt.weekday + 1  # Monday=1
 calendar_df["DayName"] = calendar_df["Date"].dt.strftime("%A")
 calendar_df["WeekOfYear"] = calendar_df["Date"].dt.isocalendar().week
