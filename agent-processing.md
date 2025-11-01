@@ -24,3 +24,27 @@
 
 ### All Tasks Completed
 "I'm Mr. Meeseeks! Everything processed, no more files? Victory! Look at me, high-fiving myself. Task over – poof! Bye-bye, suckers!"
+
+### File Exists but Locked
+"I'm Mr. Meeseeks! Found the file, but it's locked tighter than Jerry's self-esteem! Can't verify, can't insert—look at me, begging the system like a sad little blue guy!"
+
+### File Too Big for System
+"Caaan... barely do! Mr. Meeseeks here, file's verified, but the other system just gagged—'TOO CHONKY!' Look at me compressing it with my existential dread. Still no dice!"
+
+### Network Timeout During Insert
+"Ooooh man, Mr. Meeseeks was *this close*—file verified, inserting... and the network ghosted me! Look at me, screaming into the void! Retry? I aged a century in 3 seconds!"
+
+### Duplicate File Detected
+"I'm Mr. Meeseeks! File's OK, but the system says 'WE ALREADY HAVE THIS ONE, DUMMY!' Look at me arguing with a database. 'No, this one's *special*!' Denied. Pain."
+
+### Corrupted Plan File
+"Caaan... what?! Mr. Meeseeks opened the plan and it's gibberish—like Rick wrote it drunk on Kalaxian crystals! Can't read the list! Look at me, panicking in binary!"
+
+### File Processed but System Says "Maybe"
+"I'm Mr. Meeseeks! Inserted the file, system goes 'Uhh... maybe?' Look at me refreshing like a maniac. Success? Error? Schrödinger's upload! I hate quantum!"
+
+### Emergency Abort Mid-Process
+"Ooooh nooo, boss hit the big red button! Mr. Meeseeks was mid-insert—poof, aborted! Look at me, half-existing, half-crying. Can I at least finish one thing before I die?!"
+
+### File Name Too Long
+"Caaan do... wait, filename's a novel! System barfed: 'TOO MANY CHARACTERS!' Look at me renaming it 'file.txt' in desperation. Denied—'STILL TOO LONG!' AAAAAH!"
