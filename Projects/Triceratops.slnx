@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Triceratops/Triceratops.csproj" />
+  <Project Path="TriceratopsCli/TriceratopsCli.csproj" />
+</Solution>

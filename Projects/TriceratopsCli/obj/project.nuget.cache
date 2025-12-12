@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "+J6w60cwG9Q=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\pssp2\\source\\repos\\Triceratops\\TriceratopsCli\\TriceratopsCli.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pssp2\\.nuget\\packages\\bogus\\35.6.5\\bogus.35.6.5.nupkg.sha512"
+  ],
+  "logs": []
+}
