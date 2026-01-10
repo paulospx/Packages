@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asteroids: Save Earth</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            background-color: #000;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #gameOver {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="gameOver">Game Over! Earth Destroyed!</div>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gameOverText = document.getElementById('gameOver');
+
+        // Player (Spaceship)
+        const player = {
+            x: canvas.width / 2,
+            y: canvas.height - 50,
+            radius: 15,
+            angle: 0,
+            rotation: 0,
+            bullets: []
+        };
+
+        // Asteroids
+        let asteroids = [];
+        let gameOver = false;
+
+        // Keyboard controls
+        const keys = {
+            ArrowLeft: false,
+            ArrowRight: false,
+            Space: false
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code in keys) keys[e.code] = true;
+            if (e.code === 'Space' && !gameOver) {
+                // Shoot bullet
+                player.bullets.push({
+                    x: player.x,
+                    y: player.y,
+                    dx: Math.cos(player.angle) * 5,
+                    dy: -Math.sin(player.angle) * 5
+                });
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.code in keys) keys[e.code] = false;
+        });
+
+        // Spawn asteroids
+        function spawnAsteroid() {
+            if (gameOver) return;
+            asteroids.push({
+                x: Math.random() * canvas.width,
+                y: 0,
+                radius: 20,
+                dy: 2 + Math.random() * 2
+            });
+        }
+
+        // Draw player (triangle-shaped spaceship)
+        function drawPlayer() {
+            ctx.save();
+            ctx.translate(player.x, player.y);
+            ctx.rotate(player.angle);
+            ctx.beginPath();
+            ctx.moveTo(0, -player.radius);
+            ctx.lineTo(-player.radius, player.radius);
+            ctx.lineTo(player.radius, player.radius);
+            ctx.closePath();
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Draw bullets
+        function drawBullets() {
+            player.bullets.forEach(bullet => {
+                ctx.beginPath();
+                ctx.arc(bullet.x, bullet.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = 'yellow';
+                ctx.fill();
+            });
+        }
+
+        // Draw asteroids
+        function drawAsteroids() {
+            asteroids.forEach(asteroid => {
+                ctx.beginPath();
+                ctx.arc(asteroid.x, asteroid.y, asteroid.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'gray';
+                ctx.fill();
+            });
+        }
+
+        // Update game state
+        function update() {
+            if (gameOver) return;
+
+            // Rotate player
+            if (keys.ArrowLeft) player.rotation -= 0.05;
+            if (keys.ArrowRight) player.rotation += 0.05;
+            player.angle += player.rotation;
+            player.rotation *= 0.9; // Damping rotation
+
+            // Update bullets
+            player.bullets = player.bullets.filter(bullet => bullet.y > 0);
+            player.bullets.forEach(bullet => {
+                bullet.x += bullet.dx;
+                bullet.y += bullet.dy;
+            });
+
+            // Update asteroids
+            asteroids = asteroids.filter(asteroid => asteroid.y < canvas.height);
+            asteroids.forEach(asteroid => {
+                asteroid.y += asteroid.dy;
+                // Check if asteroid hits Earth (bottom of canvas)
+                if (asteroid.y + asteroid.radius > canvas.height) {
+                    gameOver = true;
+                    gameOverText.style.display = 'block';
+                }
+            });
+
+            // Collision detection: Bullets vs Asteroids
+            player.bullets.forEach((bullet, bIndex) => {
+                asteroids.forEach((asteroid, aIndex) => {
+                    const dx = bullet.x - asteroid.x;
+                    const dy = bullet.y - asteroid.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < asteroid.radius) {
+                        asteroids.splice(aIndex, 1);
+                        player.bullets.splice(bIndex, 1);
+                    }
+                });
+            });
+        }
+
+        // Game loop
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            update();
+            drawPlayer();
+            drawBullets();
+            drawAsteroids();
+            if (!gameOver) requestAnimationFrame(gameLoop);
+        }
+
+        // Spawn asteroids periodically
+        setInterval(spawnAsteroid, 2000);
+
+        // Start game
+        gameLoop();
+    </script>
+</body>
+</html>

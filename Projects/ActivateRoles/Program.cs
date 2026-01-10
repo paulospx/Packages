@@ -8,14 +8,13 @@ using Microsoft.Graph.Models;
 Console.WriteLine("Activate Azure Roles");
 
 /// <summary>
-/// Selects a random item from a list of strings.
-/// Returns an empty string if the list is null or empty.
+/// Selects a random item from a list of strings. Returns an empty string if the list is null or empty.
 /// </summary>
 /// <param name="items">List of strings to select from.</param>
 /// <returns>Randomly selected string or empty string.</returns>
 static string SelectItemFromList(List<string> items)
 {
-    if (items == null || items.Count == 0)
+    if(items == null || items.Count == 0)
     {
         return string.Empty;
     }
@@ -68,44 +67,45 @@ var graphClient = new GraphServiceClient(interactiveCredential, scopes);
 // "/" means tenant-wide
 
 // Parse command-line arguments and handle role activation
-Parser.Default.ParseArguments<Options>(args)
-       .WithParsed<Options>(async o =>
-       {
-           // Create role activation request
-           var request = new UnifiedRoleAssignmentScheduleRequest
-           {
-               Action = UnifiedRoleScheduleRequestActions.SelfActivate,
-               PrincipalId = o.PrincipalId,
-               RoleDefinitionId = o.RoleDefinitionId,
-               DirectoryScopeId = o.DirectoryScopeId,
-               Justification = o.Justification
-           };
+Parser.Default
+    .ParseArguments<Options>(args)
+    .WithParsed<Options>(
+        async o =>
+        {
+            // Create role activation request
+            var request = new UnifiedRoleAssignmentScheduleRequest
+            {
+                Action = UnifiedRoleScheduleRequestActions.SelfActivate,
+                PrincipalId = o.PrincipalId,
+                RoleDefinitionId = o.RoleDefinitionId,
+                DirectoryScopeId = o.DirectoryScopeId,
+                Justification = o.Justification
+            };
 
-           // Verbose output for debugging and auditing
-           if (o.Verbose)
-           {
-               Console.WriteLine("Role activation request details:");
-               Console.WriteLine($"Principal ID: {o.PrincipalId}");
-               Console.WriteLine($"Role Definition ID: {o.RoleDefinitionId}");
-               Console.WriteLine($"Directory Scope ID: {o.DirectoryScopeId}");
-               Console.WriteLine($"Justification: {o.Justification}");
-           }
+            // Verbose output for debugging and auditing
+            if(o.Verbose)
+            {
+                Console.WriteLine("Role activation request details:");
+                Console.WriteLine($"Principal ID: {o.PrincipalId}");
+                Console.WriteLine($"Role Definition ID: {o.RoleDefinitionId}");
+                Console.WriteLine($"Directory Scope ID: {o.DirectoryScopeId}");
+                Console.WriteLine($"Justification: {o.Justification}");
+            }
 
-           try
-           {
-               // Submit the role activation request to Microsoft Graph
-               var result = await graphClient.RoleManagement
+            try
+            {
+                // Submit the role activation request to Microsoft Graph
+                var result = await graphClient.RoleManagement
                    .Directory
                    .RoleAssignmentScheduleRequests
-                   .PostAsync(request);
+                    .PostAsync(request);
 
-               Console.WriteLine("Role activation request submitted successfully.");
-               Console.WriteLine($"Request ID: {result?.Id}");
-           }
-           catch (Exception ex)
-           {
-               Console.WriteLine($"Error activating role: {ex.Message}");
-           }
-       });
+                Console.WriteLine("Role activation request submitted successfully.");
+                Console.WriteLine($"Request ID: {result?.Id}");
+            } catch(Exception ex)
+            {
+                Console.WriteLine($"Error activating role: {ex.Message}");
+            }
+        });
 
 

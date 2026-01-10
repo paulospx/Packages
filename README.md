@@ -1,11 +1,6 @@
 # Packages
 Packages Used in Projects
 
-
-
-
-
-
 ```python
 import pyodbc
 import pandas as pd

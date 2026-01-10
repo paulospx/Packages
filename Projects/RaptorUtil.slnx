@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="RaptorUtil/RaptorUtil.csproj" />
+  <Project Path="RaptorUtilLib/RaptorUtilLib.csproj" Id="ffdbc8a9-e8cf-41f9-8298-f8b49d290abd" />
+</Solution>
